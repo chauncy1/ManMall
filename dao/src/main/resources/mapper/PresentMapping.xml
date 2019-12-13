@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.man.mapper.PresentMapping">
+    <resultMap id="user" type="com.man.entity.PresentInfo"/>
+
+
+    <update id="minusPresentCount" parameterType="com.man.entity.PresentInfo">
+        UPDATE present_info p
+        SET p.present_count = p.present_count - #{presentCount}
+        WHERE p.present_id = #{presentId}
+        <!--AND p.present_count - #{presentCount} > 0  基于数据库的乐观锁 -->
+    </update>
+</mapper>

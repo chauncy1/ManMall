@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.man.mapper.UserRoleMapper">
+    <resultMap id="RoleBaseMap" type="com.man.entity.RoleInfo">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleDesc" column="role_desc"/>
+    </resultMap>
+
+    <select id="getRoleListByUserId" resultMap="RoleBaseMap" parameterType="java.lang.Long">
+        SELECT r.role_id,r.role_name,r.role_desc
+        FROM role_info r
+        LEFT JOIN user_role_mapping m ON m.role_id=r.role_id
+        LEFT JOIN user_info u ON u.user_id=m.user_id
+        WHERE u.user_id=#{userId}
+    </select>
+</mapper>
