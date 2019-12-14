@@ -1,7 +1,7 @@
 package com.man.controller;
 
 import com.man.common.result.CommonResult;
-import com.man.controller.request.OrderRequest;
+import com.man.dto.request.OrderRequest;
 import com.man.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

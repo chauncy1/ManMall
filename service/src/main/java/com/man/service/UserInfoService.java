@@ -3,9 +3,12 @@ package com.man.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.man.dto.TokenInfoDTO;
+import com.man.dto.request.AddUserRequest;
 import com.man.entity.UserInfo;
 import com.man.mapper.UserInfoMapper;
 import com.man.util.RedisUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -87,12 +90,15 @@ public class UserInfoService {
         return userInfoMapper.selectOne(ew);
     }
 
-    public int addUserInfoWithLock(UserInfo user) {
-        int result = userInfoMapper.insert(user);
-        return result;
+    public int addUserInfoWithLock(AddUserRequest addParam) {
+        UserInfo user  = new UserInfo();
+        BeanUtils.copyProperties(addParam, user);
+        return userInfoMapper.insert(user);
     }
 
-    public int update(UserInfo user) {
+    public int update(AddUserRequest updateParam) {
+        UserInfo user  = new UserInfo();
+        BeanUtils.copyProperties(updateParam, user);
         return userInfoMapper.updateById(user);
     }
 

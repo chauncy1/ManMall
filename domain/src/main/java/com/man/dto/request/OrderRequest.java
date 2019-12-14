@@ -1,4 +1,4 @@
-package com.man.controller.request;
+package com.man.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

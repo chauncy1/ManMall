@@ -1,11 +1,13 @@
 package com.man.controller;
 
+import com.man.dto.request.AddUserRequest;
 import com.man.entity.RoleInfo;
 import com.man.entity.UserInfo;
 import com.man.service.UserInfoService;
 import com.man.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,12 +44,12 @@ public class UserInfoContoller {
     }
 
     @PostMapping("/add")
-    public int addUserInfoWithLock(@RequestBody UserInfo user) {
+    public int addUserInfoWithLock(@Validated @RequestBody AddUserRequest user) {
         return userInfoService.addUserInfoWithLock(user);
     }
 
     @PostMapping("/update")
-    public int minusUserScore(@RequestParam UserInfo user) {
+    public int minusUserScore(@Validated @RequestParam AddUserRequest user) {
         return userInfoService.update(user);
     }
 

@@ -1,4 +1,4 @@
-package com.man.controller.response;
+package com.man.dto.response;
 
 import lombok.*;
 

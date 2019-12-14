@@ -1,7 +1,7 @@
 package com.man.controller;
 
-import com.man.controller.response.BaseResponse;
 import com.man.dto.JWTInfoDTO;
+import com.man.dto.response.BaseResponse;
 import com.man.entity.UserInfo;
 import com.man.service.JWTRedisService;
 import com.man.service.UserInfoService;

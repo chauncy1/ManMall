@@ -1,7 +1,9 @@
 package com.man.common.result;
 
-import lombok.Data;
 import com.man.common.enumerate.ResultCode;
+import lombok.Data;
+
+import java.util.List;
 
 /**
  * 通用返回对象
@@ -76,10 +78,10 @@ public class CommonResult<T> {
     /**
      * 参数验证失败返回结果
      *
-     * @param message 提示信息
+     * @param data 参数校验结果
      */
-    public static <T> CommonResult<T> validateFailed(String message) {
-        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    public static <T> CommonResult<T> validateFailed(T data) {
+        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage(), data);
     }
 
     /**
