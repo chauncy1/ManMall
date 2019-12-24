@@ -99,7 +99,8 @@ public class WebLogAop {
         logMap.put("method", request.getMethod());
         logMap.put("parameter", getParameter(method, joinPoint.getArgs()));
         logMap.put("spendTime", (int) (endTime - startTime));
-        log.info("======请求执行结束： {}", request.getRequestURL().toString(), JSONObject.toJSONString(logMap));
+        log.info("======请求执行结束： {}", request.getRequestURL().toString());
+        log.info("====== {}", JSONObject.toJSONString(logMap));
         return result;
     }
 
