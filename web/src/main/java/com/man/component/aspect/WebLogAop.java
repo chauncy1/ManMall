@@ -37,6 +37,7 @@ public class WebLogAop {
 
     /**
      * 前置通知，方法调用前被调用
+     *
      * @param joinPoint
      */
     @Before("webLog()")
@@ -46,6 +47,7 @@ public class WebLogAop {
 
     /**
      * 处理完请求返回内容
+     *
      * @param ret
      * @throws Throwable
      */
@@ -57,6 +59,7 @@ public class WebLogAop {
 
     /**
      * 后置异常通知
+     *
      * @param jp
      */
     @AfterThrowing("webLog()")
@@ -66,6 +69,7 @@ public class WebLogAop {
 
     /**
      * 后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
+     *
      * @param jp
      */
     @After("webLog()")
@@ -77,6 +81,7 @@ public class WebLogAop {
      * 环绕通知,环绕增强，相当于MethodInterceptor
      * 相当于 前置 -> 方法执行 -> 后置
      * 俺的思考：可以在这里try catch处理异常
+     *
      * @param joinPoint
      * @return
      */
@@ -99,8 +104,7 @@ public class WebLogAop {
         logMap.put("method", request.getMethod());
         logMap.put("parameter", getParameter(method, joinPoint.getArgs()));
         logMap.put("spendTime", (int) (endTime - startTime));
-        log.info("======请求执行结束： {}", request.getRequestURL().toString());
-        log.info("====== {}", JSONObject.toJSONString(logMap));
+        log.info("======请求执行结束： {}", JSONObject.toJSONString(logMap));
         return result;
     }
 

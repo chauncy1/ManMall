@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.integration.redis.util.RedisLockRegistry;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 /**
  * Redis的序列化

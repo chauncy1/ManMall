@@ -91,13 +91,13 @@ public class UserInfoService {
     }
 
     public int addUserInfoWithLock(AddUserRequest addParam) {
-        UserInfo user  = new UserInfo();
+        UserInfo user = new UserInfo();
         BeanUtils.copyProperties(addParam, user);
         return userInfoMapper.insert(user);
     }
 
     public int update(AddUserRequest updateParam) {
-        UserInfo user  = new UserInfo();
+        UserInfo user = new UserInfo();
         BeanUtils.copyProperties(updateParam, user);
         return userInfoMapper.updateById(user);
     }
@@ -112,5 +112,9 @@ public class UserInfoService {
         }
         result = userInfoMapper.minusUserScore(user);
         return result;
+    }
+
+    public int deleteById(String userId) {
+        return userInfoMapper.deleteById(userId);
     }
 }

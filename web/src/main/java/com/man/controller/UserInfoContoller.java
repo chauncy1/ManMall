@@ -57,4 +57,10 @@ public class UserInfoContoller {
     public int minusUserScoreByRedis(@RequestParam String userId, @RequestParam Integer score) {
         return userInfoService.minusUserScoreByRedis(userId, score);
     }
+
+    @PostMapping("/delete/{userId}")
+    public int deleteById(@PathVariable String userId) {
+        return userInfoService.deleteById(userId);
+    }
+
 }
