@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) // 取消自动扫描并配置这玩意spring.datasource
+@SpringBootApplication//(exclude = {DataSourceAutoConfiguration.class}) // 自动配置数据源 spring.datasource
 //@MapperScan("com.man.mapper") 在数据库配置bean里已经声明了
 public class MallApplication {
 
