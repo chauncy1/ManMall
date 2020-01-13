@@ -1,9 +1,7 @@
 package com.man.common.result;
 
-import com.man.common.enumerate.ResultCode;
+import com.man.common.enums.ResultCode;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * 通用返回对象

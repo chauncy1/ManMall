@@ -1,4 +1,4 @@
-package com.man.common.enumerate;
+package com.man.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

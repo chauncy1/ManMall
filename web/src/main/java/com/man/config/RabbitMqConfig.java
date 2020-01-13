@@ -1,6 +1,6 @@
 package com.man.config;
 
-import com.man.common.enumerate.QueueEnum;
+import com.man.common.enums.QueueEnum;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

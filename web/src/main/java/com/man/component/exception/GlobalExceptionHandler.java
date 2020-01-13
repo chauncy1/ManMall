@@ -1,9 +1,8 @@
 package com.man.component.exception;
 
-import com.man.common.enumerate.ResultCode;
+import com.man.common.enums.ResultCode;
 import com.man.common.result.CommonResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
