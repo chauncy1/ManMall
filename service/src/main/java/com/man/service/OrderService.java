@@ -2,7 +2,7 @@ package com.man.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import com.man.common.enumerate.OrderStatusEnum;
+import com.man.common.enums.OrderStatusEnum;
 import com.man.common.result.CommonResult;
 import com.man.component.mq.CancelOrderSender;
 import com.man.entity.OrderInfo;

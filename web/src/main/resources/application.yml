@@ -133,13 +133,14 @@ spring:
         enabled: true
       cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
       cluster-name: elasticsearch # es集群的名称
-  rabbimq:
+  rabbitmq:
     host: localhost # rabbitmq的连接地址
     port: 5672 # rabbitmq的连接端口号
     virtual-host: /mall # rabbitmq的虚拟host
     username: mall # rabbitmq的用户名
     password: mall # rabbitmq的密码
-    publisher-confirms-type: true #如果对异步消息需要回调必须设置为true
+    publisher-confirm-type: simple # rabbitmq的密码
+
   main:
     allow-bean-definition-overriding: true # 某个bug
 logging:

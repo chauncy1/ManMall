@@ -1,6 +1,6 @@
 package com.man.component.mq;
 
-import com.man.common.enumerate.QueueEnum;
+import com.man.common.enums.QueueEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.man.service;
 
 import lombok.extern.slf4j.Slf4j;
 import com.man.common.constant.MqConstant;
-import com.man.common.enumerate.QueueEnum;
+import com.man.common.enums.QueueEnum;
 import com.man.common.result.CommonResult;
 import com.man.component.mq.TopicSender;
 import org.springframework.amqp.core.AmqpTemplate;
