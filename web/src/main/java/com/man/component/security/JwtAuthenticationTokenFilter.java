@@ -2,6 +2,7 @@ package com.man.component.security;
 
 import com.man.service.JWTRedisService;
 import com.man.util.JWTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ import java.io.IOException;
  * JWT登录授权过滤器
  * Created by macro on 2018/4/26.
  */
+@Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
     @Autowired
     @Qualifier("userDetailServiceImp")
     private UserDetailsService userDetailsService;
@@ -41,14 +42,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String authToken = request.getHeader("Authorization");
         if (authToken != null) {
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
-            LOGGER.info("checking username:{}", username);
+            log.info("checking username:{}", username);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtRedisService.check(authToken)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 //                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    LOGGER.info("authenticated user:{}", username);//设置权限验证结果
+                    log.info("authenticated user:{}", username);//设置权限验证结果
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
