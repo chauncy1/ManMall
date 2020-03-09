@@ -115,6 +115,8 @@ public class UserInfoService {
     }
 
     public int deleteById(String userId) {
-        return userInfoMapper.deleteById(userId);
+        QueryWrapper<UserInfo> ew = new QueryWrapper<>();
+        ew.eq("user_id", userId);
+        return userInfoMapper.delete(ew);
     }
 }

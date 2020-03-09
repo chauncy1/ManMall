@@ -7,7 +7,7 @@ master:
     url: jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-    initialSize: 0
+    initialSize: 1
     maxActive: 16
     minIdle: 1
     maxWait: 60000
@@ -29,6 +29,7 @@ master:
     testOnBorrow: false
     #是否在连接放回连接池后检测其可用性
     testOnReturn: false
+    filters: stat,wall
 
 slaver1:
   datasource:
@@ -36,9 +37,9 @@ slaver1:
     url: jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-    initialSize: 0
-    maxActive: 16
-    minIdle: 1
+    initialSize: 2
+    maxActive: 17
+    minIdle: 2
     maxWait: 60000
     #打开PSCache，并且指定每个连接PSCache的大小
     poolPreparedStatements: true
@@ -54,6 +55,7 @@ slaver1:
     testOnBorrow: false
     #是否在连接放回连接池后检测其可用性
     testOnReturn: false
+    filters: stat,wall
 
 slaver2:
   datasource:
@@ -61,9 +63,9 @@ slaver2:
     url: jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-    initialSize: 0
-    maxActive: 16
-    minIdle: 1
+    initialSize: 3
+    maxActive: 18
+    minIdle: 3
     maxWait: 60000
     #打开PSCache，并且指定每个连接PSCache的大小
     poolPreparedStatements: true
@@ -79,6 +81,7 @@ slaver2:
     testOnBorrow: false
     #是否在连接放回连接池后检测其可用性
     testOnReturn: false
+    filters: stat,wall
 
 spring:
   #  通过上面的master和slaver自定义数据源
