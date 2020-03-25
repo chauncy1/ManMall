@@ -2,13 +2,20 @@ package com.man.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.man.dto.request.AddPresentRequest;
 import lombok.extern.slf4j.Slf4j;
 import com.man.entity.PresentInfo;
 import com.man.mapper.PresentMapping;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.integration.redis.util.RedisLockRegistry;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
@@ -150,8 +157,10 @@ public class PresentService {
         }
     }
 
-    public int insert(PresentInfo p) {
-        return presentMapping.insert(p);
+    public int insertRequest(AddPresentRequest addReq) {
+        PresentInfo pInfo = new PresentInfo();
+        BeanUtils.copyProperties(addReq, pInfo);
+        return presentMapping.insert(pInfo);
     }
 
     public PresentInfo selectById(String id) {
@@ -164,4 +173,25 @@ public class PresentService {
                 .eq("present_id", p.getPresentId()));
     }
 
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
+    public void testTransaction(){
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);//新发起一个事务
+        TransactionStatus status = transactionManager.getTransaction(def);
+        try {
+            AddPresentRequest addReq = new AddPresentRequest();
+            addReq.setPresentName("giao哥的大牙");
+            addReq.setPresentScore(98);
+            addReq.setPresentCount(10);
+            addReq.setPresentDesc("一给窝里giao");
+
+            insertRequest(addReq);
+            transactionManager.commit(status);
+
+        }catch (Exception e){
+            transactionManager.rollback(status);
+        }
+    }
 }

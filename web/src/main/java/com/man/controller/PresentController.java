@@ -1,12 +1,10 @@
 package com.man.controller;
 
+import com.man.dto.request.AddPresentRequest;
 import com.man.service.PresentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -17,45 +15,42 @@ public class PresentController {
     PresentService presentService;
 
     @PostMapping("/minusCount")
-    public int minusPresentCount(@RequestParam String id, @RequestParam Integer count) {
-        int result = 0;
-        try {
-            result = presentService.minusPresentCount(id, count);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public int minusPresentCount(@RequestParam String id, @RequestParam Integer count) throws InterruptedException {
+        int result = presentService.minusPresentCount(id, count);
         return result;
     }
 
     @PostMapping("/minusCountRedis")
     public int minusPresentCountbyRedis(@RequestParam String id, @RequestParam Integer count) {
-        int result = 0;
-        result = presentService.minusPresentCountByRedis(id, count);
+        int result = presentService.minusPresentCountByRedis(id, count);
         log.info("minusCountRedis result: " + result);
         return result;
     }
 
     @PostMapping("/minusCountSema")
-    public int minusPresentCountbySemaphore(@RequestParam String id, @RequestParam Integer count) {
-        int result = 0;
-        try {
-            result = presentService.minusPresentCountBySemaphore(id, count);
-            log.info("minusCountSema result: " + result);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public int minusPresentCountbySemaphore(@RequestParam String id, @RequestParam Integer count) throws InterruptedException {
+        int result = presentService.minusPresentCountBySemaphore(id, count);
+        log.info("minusCountSema result: " + result);
         return result;
     }
 
     @PostMapping("/minusCountInte")
-    public int minusPresentCountbyRedis2(@RequestParam String id, @RequestParam Integer count) {
+    public int minusPresentCountbyRedis2(@RequestParam String id, @RequestParam Integer count) throws InterruptedException {
         int result = 0;
-        try {
-            result = presentService.minusPresentCountByRedisLock(id, count);
-            log.info("minusCountSema result: " + result);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        result = presentService.minusPresentCountByRedisLock(id, count);
+        log.info("minusCountSema result: " + result);
         return result;
+    }
+
+    @PostMapping("/add")
+    public int addPresent(@RequestBody AddPresentRequest addReq) {
+        int result = presentService.insertRequest(addReq);
+        log.info("add result: " + result);
+        return result;
+    }
+
+    @GetMapping("/test/transaction")
+    public void addPresent() {
+        presentService.testTransaction();
     }
 }
