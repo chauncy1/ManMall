@@ -46,8 +46,8 @@ public class UserInfoService {
             userList = userInfoMapper.selectList(null);
             for (UserInfo user : userList) {
                 redisTemplate.boundHashOps("users").putIfAbsent(user.getUserId(), user);
-                redisTemplate.boundHashOps("users").expire(5, TimeUnit.MINUTES);
             }
+            redisTemplate.boundHashOps("users").expire(5, TimeUnit.MINUTES);
         }
         return userList;
     }

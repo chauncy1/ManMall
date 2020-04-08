@@ -39,7 +39,6 @@ public class LoginController {
             @RequestParam String userAccount,
             @RequestParam String password,
             HttpServletRequest request, HttpServletResponse response) {
-        BaseResponse baseResponse = new BaseResponse();
         UserInfo userInfo = userInfoService.selectByUserAccount(userAccount);
         if (StringUtils.isEmpty(userAccount)) {
             return BaseResponse.newInstanceFailed("账户为空");

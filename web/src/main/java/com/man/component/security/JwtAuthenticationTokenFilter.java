@@ -1,5 +1,6 @@
 package com.man.component.security;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.man.service.JWTRedisService;
 import com.man.util.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * JWT登录授权过滤器
@@ -40,11 +42,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
         String authToken = request.getHeader("Authorization");
-        if (authToken != null) {
+        if (StringUtils.isNotEmpty(authToken)) {
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
             log.info("checking username:{}", username);
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (StringUtils.isNotEmpty(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtRedisService.check(authToken)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

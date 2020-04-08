@@ -32,7 +32,7 @@ public class OrderService {
     @Autowired
     PresentService presentService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public CommonResult generateOrder(Long userId, Long presentId, Integer presentCount) {
         log.info("process generateOrder");
 
@@ -60,7 +60,7 @@ public class OrderService {
         return CommonResult.success(orderId, "下单成功");
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public CommonResult payOrder(String orderId) {
         OrderInfo orderInfo = selectById(orderId);
         if (Objects.isNull(orderInfo)) {
@@ -78,7 +78,7 @@ public class OrderService {
         return CommonResult.success(null, "付款成功");
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public CommonResult cancelOrder(String orderId) {
         log.info("process cancelOrder orderId:{}", orderId);
         OrderInfo orderInfo = selectById(orderId);

@@ -151,7 +151,7 @@ public class PresentService {
      */
     public void RamdomSleep() {
         try {
-            Thread.sleep(new Random().nextInt(10) + 1);
+            TimeUnit.MILLISECONDS.sleep(new Random().nextInt(10) + 1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
