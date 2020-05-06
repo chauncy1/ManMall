@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScans;
 public class MallApplication {
 
     public static void main(String[] args) {
-        System.setProperty("es.set.netty.runtime.available.processors", "false");
+//        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(MallApplication.class, args);
     }
 }

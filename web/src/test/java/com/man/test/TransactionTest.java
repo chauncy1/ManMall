@@ -24,26 +24,36 @@ public class TransactionTest {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
+    int count = 0;
     /**
      * 手动控制事务
      */
     @Test
     public void test() {
-        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);//新发起一个事务
-        TransactionStatus status = transactionManager.getTransaction(def);
-        try {
-            AddPresentRequest addReq = new AddPresentRequest();
-            addReq.setPresentName("giao哥的大牙");
-            addReq.setPresentScore(98);
-            addReq.setPresentCount(10);
-            addReq.setPresentDesc("一给窝里giao");
+        DefaultTransactionDefinition dfd = new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus status = transactionManager.getTransaction(dfd);
+        while(true) {
+            try {
+                if(status.isCompleted()){
+                    status = transactionManager.getTransaction(dfd);
+                }
+                AddPresentRequest addReq = new AddPresentRequest();
+                addReq.setPresentName("giao哥的大牙");
+                addReq.setPresentScore(98);
+                addReq.setPresentCount(10);
+                addReq.setPresentDesc("一给窝里giao");
+                count++;
 
-            presentService.insertRequest(addReq);
-            transactionManager.commit(status);
+                presentService.insertRequest(addReq);
+                if(count == 5){
+                    count = 0;
+                    transactionManager.commit(status);
+                }
+            }catch (Exception e){
+                transactionManager.rollback(status);
+            }
 
-        }catch (Exception e){
-            transactionManager.rollback(status);
         }
+
     }
 }
