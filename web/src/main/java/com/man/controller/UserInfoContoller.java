@@ -24,7 +24,7 @@ public class UserInfoContoller {
 
     @GetMapping("/getall")
     public List<UserInfo> selectAll() {
-        return userInfoService.selectAllWithRedis();
+        return userInfoService.selectAllWithRedisHash();
     }
 
     @GetMapping("/getall1")

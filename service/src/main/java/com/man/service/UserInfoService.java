@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -34,10 +36,10 @@ public class UserInfoService {
     /**
      * 使用存入redis的方式加快查询
      * update和delete操作也要更新redis，否则会有缓存时效性问题
-     *
+     * 跟String存对象的方式区别也就是可以通过id查询了
      * @return
      */
-    public List<UserInfo> selectAllWithRedis() {
+    public List<UserInfo> selectAllWithRedisHash() {
         List<Object> list = redisTemplate.boundHashOps("users").values();
         //accept json to convert from object list to DO list
         String jsonString = JSONObject.toJSONString(list);
@@ -51,18 +53,18 @@ public class UserInfoService {
         }
         return userList;
     }
-//    public List<UserInfo> selectAllWithRedis(){
-//        String listFromJson = redisUtil.get("all_user_list");
-//        List<UserInfo> userList = new ArrayList<>();
-//        if(StringUtils.isEmpty(listFromJson)) {
-//            userList = userInfoMapper.selectList(null);
-//            String userListJson = JSONArray.toJSONString(userList);
-//            redisUtil.set("all_user_list", userListJson);
-//        }else{
-//            userList = JSONArray.parseArray(listFromJson, UserInfo.class);
-//        }
-//        return userList;
-//    }
+    public List<UserInfo> selectAllWithRedisString(){
+        String listFromJson = redisUtil.get("all_user_list");
+        List<UserInfo> userList = new ArrayList<>();
+        if(StringUtils.isEmpty(listFromJson)) {
+            userList = userInfoMapper.selectList(null);
+            String userListJson = JSONArray.toJSONString(userList);
+            redisUtil.set("all_user_list", userListJson);
+        }else{
+            userList = JSONArray.parseArray(listFromJson, UserInfo.class);
+        }
+        return userList;
+    }
 
     public List<UserInfo> selectAll() {
         return userInfoMapper.selectList(null);
