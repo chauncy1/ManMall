@@ -146,7 +146,26 @@ spring:
     virtual-host: /mall # rabbitmq的虚拟host
     username: mall # rabbitmq的用户名
     password: mall # rabbitmq的密码
+
+#发送端confirm机制
+    # publisher-confirms：设置为simple或correlated时。当消息投递到Exchange后，会回调confirm()方法进行通知生产者
     publisher-confirm-type: simple # rabbitmq的密码
+
+    # publisher-returns：设置为true时。当消息匹配到Queue并且失败时，会通过回调returnedMessage()方法返回消息
+    # publisher-returns和mandatory如果都设置的话，优先级是以mandatory优先
+    #    publisher-returns: true
+
+    # spring.rabbitmq.template.mandatory: 设置为true时。指定消息在没有被队列接收时会通过回调returnedMessage()方法退回。
+    template:
+      mandatory: true
+
+    # 开启消费端手动ack确认消息
+#    listener:
+#      simple:
+#        acknowledge-mode: manual
+#        concurrency: 1 # 最少消费者数量
+#        max-concurrency: 10 # 最大消费者数量
+
 
   main:
     allow-bean-definition-overriding: true # 某个bug
