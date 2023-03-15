@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,13 +24,22 @@ public class GlobalExceptionHandler {
         return CommonResult.failed(ResultCode.FAILED);
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public CommonResult<List<String>> bindExceptionHandler(MethodArgumentNotValidException ex) {
-        log.error("参数校验错误");
-        List<String> res = ex.getBindingResult().getAllErrors()
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CommonResult<List<String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<String> res = e.getBindingResult().getFieldErrors()
                 .stream()
-                .map(ObjectError -> ObjectError.getDefaultMessage())
+                .map(fieldError -> fieldError.getField() + fieldError.getDefaultMessage())
                 .collect(Collectors.toList());
+        log.info("参数校验错误: {}", res);
         return CommonResult.validateFailed(res);
+    }
+
+    /**
+     * 请求参数异常处理
+     */
+    @ExceptionHandler(ValidationException.class)
+    public CommonResult<List<String>> handleMethodArgumentNotValidException(ValidationException e) {
+        log.info("参数校验错误: {}", e.getMessage());
+        return CommonResult.validateFailed(e.getMessage());
     }
 }

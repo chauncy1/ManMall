@@ -75,6 +75,13 @@ public class CommonResult<T> {
 
     /**
      * 参数验证失败返回结果
+     */
+    public static <T> CommonResult<T> validateFailed(String message) {
+        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    }
+
+    /**
+     * 参数验证失败返回结果
      *
      * @param data 参数校验结果
      */

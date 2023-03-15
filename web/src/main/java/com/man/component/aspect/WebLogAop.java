@@ -2,6 +2,7 @@ package com.man.component.aspect;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
+import com.man.common.annotation.ExcludeWebLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -98,6 +99,11 @@ public class WebLogAop {
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
         long endTime = System.currentTimeMillis();
+
+        // 如果有ExcludeWebLog注解，则不打印log
+        if (null != method.getAnnotation(ExcludeWebLog.class)) {
+            return result;
+        }
 
         Map<String, Object> logMap = new HashMap<>();
         logMap.put("url", request.getRequestURL().toString());
